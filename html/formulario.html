@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar incidente al registro</title>
+    <link rel="stylesheet" href="../css/formulario.css">
+</head>
+
+<body>
+<!-- Se establece la cabecera principal con el logotipo corporativo y el menú de navegación -->
+<header>
+    <img src="instacredit.png" alt="Logo instacredit" width="310" height="80">
+    
+    <!-- Botón de menú hamburguesa que activa el panel -->
+    <img src="Menu-Hamburguesa.png" alt="Menu" width="80" height="80" id="hamburger-btn" style="cursor: pointer;">
+</header>
+
+<!-- Panel lateral deslizante -->
+<div class="side-panel" id="sidePanel">
+    <div class="panel-header">
+        <span class="close-btn" id="closeBtn">&times;</span>
+    </div>
+    <div class="panel-content">
+        <div class="user-info">
+            <span class="user-icon">
+                <img src="Logo-Usuario.png" alt="Icono de usuario" width="40" height="40">
+            </span>
+            <span class="user-name">Usuario</span>
+        </div>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+        <a href="#" class="logout-link">
+            <span class="logout-icon">
+                <img src="Cerrar-Sesion.png" alt="Salir" width="20" height="20">
+            </span> Cerrar sesión
+        </a>
+    </div>
+</div>
+
+<!-- Capa oscura de fondo (overlay) cuando el panel está abierto -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Se inicia el contenedor principal que aloja el título y la estructura del formulario -->
+<div class="container">
+    <h2>Agregar incidente al registro</h2>
+
+    <div class="main-layout">
+        <!-- Se define la sección del formulario de captura de datos -->
+        <div class="form-section">
+            <form action="formulario.php" method="POST">
+                <div class="form-grid">
+                    
+                    <!-- Campo para capturar el tipo de incidente -->
+                    <div class="form-group">
+                        <label for="tipo_incidente">Tipo de incidente*</label>
+                        <input type="text" id="tipo_incidente" name="tipo_incidente" required>
+                    </div>
+
+                    <!-- Selector para elegir los servidores afectados -->
+                    <div class="form-group">
+                        <label for="servidor">Servidor(es)</label>
+                        <select id="servidor" name="servidor">
+                            <option value="">Seleccionar</option>
+                            <option value="Servidor 1">Servidor 1</option>
+                            <option value="Servidor 2">Servidor 2</option>
+                        </select>
+                    </div>
+
+                    <!-- Selector de fecha del registro -->
+                    <div class="form-group">
+                        <label for="fecha">Fecha*</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+
+                    <!-- Selector para elegir los sistemas involucrados -->
+                    <div class="form-group">
+                        <label for="sistema">Sistema(s)</label>
+                        <select id="sistema" name="sistema">
+                            <option value="">Seleccionar</option>
+                            <option value="Sistema A">Sistema A</option>
+                            <option value="Sistema B">Sistema B</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo para registrar la fecha y hora de inicio -->
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha de inicio*</label>
+                        <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" required>
+                    </div>
+
+                    <!-- Selector para indicar el país o países afectados -->
+                    <div class="form-group">
+                        <label for="pais">País(es)*</label>
+                        <select id="pais" name="pais" required>
+                            <option value="">Seleccionar</option>
+                            <option value="Costa Rica">Costa Rica</option>
+                            <option value="El_Salvador">El Salvador</option>
+                            <option value="Nicaragua">Nicaragua</option>
+                            <option value="Panama">Panamá</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo para registrar la fecha y hora de finalización -->
+                    <div class="form-group">
+                        <label for="fecha_fin">Fecha de finalización*</label>
+                        <input type="datetime-local" id="fecha_fin" name="fecha_fin" required>
+                    </div>
+
+                    <!-- Campo de texto para indicar si afecta la operativa -->
+                    <div class="form-group">
+                        <label for="afecta_operativa">Afecta operativa*</label>
+                        <select id="afecta_operativa" name="afecta_operativa" required>
+                            <option value="">Seleccionar</option>
+                            <option value="Si">Sí</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo para registrar la duración estimada del incidente -->
+                    <div class="form-group">
+                        <label for="duracion">Duración*</label>
+                        <input type="text" id="duracion" name="duracion" required>
+                    </div>
+
+                    <!-- Campo para registrar el nombre de la persona responsable -->
+                    <div class="form-group">
+                        <label for="persona_registra">Persona que registra*</label>
+                        <input type="text" id="persona_registra" name="persona_registra" required>
+                    </div>
+
+                    <!-- Área de texto extensa para detallar la falla ocurrida -->
+                    <div class="form-group full-width">
+                        <label for="detalle_falla">Detalle de la falla* (Máx. 2000 caracteres)</label>
+                        <textarea id="detalle_falla" name="detalle_falla" maxlength="2000" required></textarea>
+                    </div>
+
+                    <!-- Campo de texto para describir la afectación detallada -->
+                    <div class="form-group full-width">
+                        <label for="detalle_afectacion">Detalle afectación (Máx. 1000 caracteres)</label>
+                        <input type="text" id="detalle_afectacion" maxlength="1000" name="detalle_afectacion">
+                    </div>
+
+                    <!-- Campo para ingresar la URL de documentación o evidencias -->
+                    <div class="form-group full-width">
+                        <label for="url">URL documentación/evidencias</label>
+                        <input type="url" id="url" name="url">
+                    </div>
+
+                    <!-- Contenedor que agrupa los botones de navegación y envío -->
+                    <div class="buttons-container">
+                        <button type="button" class="btn-salir">Salir</button>
+                        <button type="submit" name="publicar" class="btn-publicar">Publicar incidente</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <!-- Se define la sección visual para mostrar a Prestamito -->
+        <div class="mascot-section">
+            <img src="Prestamito-Celular.png" alt="Prestamito">
+        </div>
+    </div>
+
+    <!-- Script para validar campos condicionales, duraciones y controlar el menú lateral -->
+    <script src="script.js" defer></script>
+
+    <!-- Se implementa el bloque lógico en PHP para procesar la recepción de datos mediante el método POST -->
+    
+    
+</div>
+
+</body>
+</html>
