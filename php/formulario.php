@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar incidente al registro</title>
     <!-- Se vincula la hoja de estilos externa -->
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="../css/formulario.css">
+    <link rel="stylesheet" href="../css/root.css">
 </head>
 <body>
 
 <!-- Se establece la cabecera principal con el logotipo corporativo y el menú de navegación -->
 <header>
-    <img src="img/instacredit.png" alt="Logo instacredit" width="310" height="80">
+    <img src="../img/instacredit.png" alt="Logo instacredit" width="310" height="80">
     <img src="img/Menu-Hamburguesa.png" alt="Menu" width="80" height="80" id="hamburger-btn" style="cursor: pointer;">
 </header>
 
@@ -157,6 +158,7 @@
     const fechaInicio = document.getElementById('fecha_inicio');
     const fechaFin = document.getElementById('fecha_fin');
 
+    // Se controla el despliegue y cierre del panel lateral deslizante
     function openPanel() {
         sidePanel.classList.add('open');
         overlay.classList.add('active');
@@ -171,6 +173,7 @@
     closeBtn.addEventListener('click', closePanel);
     overlay.addEventListener('click', closePanel);
 
+    // Se actualiza el atributo 'min' de la fecha de fin basándose en la fecha de inicio
     fechaInicio.addEventListener('change', function() {
         fechaFin.min = fechaInicio.value;
         if (fechaFin.value && fechaFin.value < fechaInicio.value) {
@@ -178,10 +181,37 @@
         }
     });
 
+    function calcularDuracion() {
+        const inicio = new Date(fechaInicio.value);
+        const fin = new Date(fechaFin.value);
+        const inputDuracion = document.getElementById('duracion');
+
+        // Verificamos que ambas fechas sean válidas y que la fecha fin sea mayor
+        if (fechaInicio.value && fechaFin.value && fin >= inicio) {
+            const diferenciaMs = fin - inicio; // Diferencia en milisegundos
+            const horasTotales = Math.floor(diferenciaMs / (1000 * 60 * 60)); // Convertimos a horas
+
+            if (horasTotales < 24) {
+                inputDuracion.value = horasTotales + (horasTotales === 1 ? " hora" : " horas");
+            } else {
+                const dias = Math.floor(horasTotales / 24);
+                const horasRestantes = horasTotales % 24;
+                inputDuracion.value = dias + (dias === 1 ? " día" : " días") + (horasRestantes > 0 ? " y " + horasRestantes + " horas" : "");
+            }
+        } else {
+            inputDuracion.value = '';
+        }
+    }
+
+    // Ejecutar el cálculo en tiempo real cada vez que cambie la fecha de inicio o de fin
+    fechaInicio.addEventListener('change', calcularDuracion);
+    fechaFin.addEventListener('change', calcularDuracion);
+
     document.querySelector('form').addEventListener('submit', function(event) {
         const afectaOperativa = document.getElementById('afecta_operativa').value;
         const detalleAfectacion = document.getElementById('detalle_afectacion').value.trim();
 
+        // Validar congruencia de fechas
         if (fechaFin.value && fechaInicio.value && fechaFin.value < fechaInicio.value) {
             alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
             event.preventDefault();
@@ -189,6 +219,7 @@
             return;
         }
 
+        // Validar el detalle de afectación condicional
         if (afectaOperativa === 'Si' && detalleAfectacion === '') {
             alert('El campo "Detalle afectación" es obligatorio cuando la afectación operativa es "Sí".');
             event.preventDefault();
