@@ -1,43 +1,201 @@
-<?php
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $afecta_operativa = $_POST['afecta_operativa'] ?? '';
-    $detalle_afectacion = trim($_POST['detalle_afectacion'] ?? '');
-    $fecha_inicio = $_POST['fecha_inicio'] ?? '';
-    $fecha_fin = $_POST['fecha_fin'] ?? '';
-
-    // Se valida que la fecha de finalización sea mayor o igual a la de inicio.
-    if ($fecha_fin < $fecha_inicio) {
-        $mensaje = "Error: La fecha de finalización no puede ser anterior a la fecha de inicio.";
-        $tipo_mensaje = "error";
-    } elseif ($afecta_operativa === 'Si' && $detalle_afectacion === '') {
-        $mensaje = "Error: Debe registrar el 'Detalle afectación' si la afectación operativa es 'Sí'.";
-        $tipo_mensaje = "error";
-    } else {
-        // Aquí continuaría el proceso para guardar en la base de datos de SQL Server.
-        $mensaje = "¡Formulario procesado correctamente!";
-        $tipo_mensaje = "exito";
-    }
-} else {
-    header("Location: index.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado del registro</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Agregar incidente al registro</title>
+    <!-- Se vincula la hoja de estilos externa -->
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <main class="container">
-        <h2 class="<?= htmlspecialchars($tipo_mensaje, ENT_QUOTES, 'UTF-8') ?>">
-            <?= htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8') ?>
-        </h2>
-        <p style="text-align: center;">
-            <a href="index.html">Volver al formulario</a>
-        </p>
-    </main>
+
+<!-- Se establece la cabecera principal con el logotipo corporativo y el menú de navegación -->
+<header>
+    <img src="img/instacredit.png" alt="Logo instacredit" width="310" height="80">
+    <img src="img/Menu-Hamburguesa.png" alt="Menu" width="80" height="80" id="hamburger-btn" style="cursor: pointer;">
+</header>
+
+<!-- Panel lateral deslizante -->
+<div class="side-panel" id="sidePanel">
+    <div class="panel-header">
+        <span class="close-btn" id="closeBtn">&times;</span>
+    </div>
+    <div class="panel-content">
+        <div class="user-info">
+            <span class="user-icon">
+                <img src="img/Logo-Usuario.png" alt="Icono de usuario" width="40" height="40">
+            </span>
+            <span class="user-name">Usuario</span>
+        </div>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+        <a href="#" class="logout-link">
+            <span class="logout-icon">
+                <img src="img/Cerrar-Sesion.png" alt="Salir" width="20" height="20">
+            </span> Cerrar sesión
+        </a>
+    </div>
+</div>
+
+<!-- Capa oscura de fondo (overlay) cuando el panel está abierto -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Se inicia el contenedor principal que aloja el título y la estructura del formulario -->
+<div class="container">
+    <h2>Agregar incidente al registro</h2>
+
+    <div class="main-layout">
+        <!-- Se define la sección del formulario de captura de datos -->
+        <div class="form-section">
+            <form action="procesar.php" method="POST">
+                <div class="form-grid">
+                    
+                    <div class="form-group">
+                        <label for="tipo_incidente">Tipo de incidente*</label>
+                        <input type="text" id="tipo_incidente" name="tipo_incidente" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="servidor">Servidor(es)</label>
+                        <select id="servidor" name="servidor">
+                            <option value="">Seleccionar</option>
+                            <option value="Servidor 1">Servidor 1</option>
+                            <option value="Servidor 2">Servidor 2</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha">Fecha*</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sistema">Sistema(s)</label>
+                        <select id="sistema" name="sistema">
+                            <option value="">Seleccionar</option>
+                            <option value="Sistema A">Sistema A</option>
+                            <option value="Sistema B">Sistema B</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha de inicio*</label>
+                        <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pais">País(es)*</label>
+                        <select id="pais" name="pais" required>
+                            <option value="">Seleccionar</option>
+                            <option value="Costa Rica">Costa Rica</option>
+                            <option value="El_Salvador">El Salvador</option>
+                            <option value="Nicaragua">Nicaragua</option>
+                            <option value="Panama">Panamá</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha_fin">Fecha de finalización*</label>
+                        <input type="datetime-local" id="fecha_fin" name="fecha_fin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="afecta_operativa">Afecta operativa*</label>
+                        <select id="afecta_operativa" name="afecta_operativa" required>
+                            <option value="">Seleccionar</option>
+                            <option value="Si">Sí</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duracion">Duración*</label>
+                        <input type="text" id="duracion" name="duracion" readonly placeholder="Se calcula automáticamente" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="persona_registra">Persona que registra*</label>
+                        <input type="text" id="persona_registra" name="persona_registra" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="detalle_falla">Detalle de la falla* (Máx. 2000 caracteres)</label>
+                        <textarea id="detalle_falla" name="detalle_falla" maxlength="2000" required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="detalle_afectacion">Detalle afectación (Máx. 1000 caracteres)</label>
+                        <input type="text" id="detalle_afectacion" maxlength="1000" name="detalle_afectacion">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="url">URL documentación/evidencias</label>
+                        <input type="url" id="url" name="url">
+                    </div>
+
+                    <div class="buttons-container">
+                        <button type="button" class="btn-salir">Salir</button>
+                        <button type="submit" name="publicar" class="btn-publicar">Publicar incidente</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <!-- Se define la sección visual para mostrar a Prestamito -->
+        <div class="mascot-section">
+            <img src="Prestamito-Celular.png" alt="Prestamito">
+        </div>
+    </div>
+</div>
+
+<!-- Script para validar campos, fechas y controlar el panel lateral -->
+<script>
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const sidePanel = document.getElementById('sidePanel');
+    const closeBtn = document.getElementById('closeBtn');
+    const overlay = document.getElementById('overlay');
+    const fechaInicio = document.getElementById('fecha_inicio');
+    const fechaFin = document.getElementById('fecha_fin');
+
+    function openPanel() {
+        sidePanel.classList.add('open');
+        overlay.classList.add('active');
+    }
+
+    function closePanel() {
+        sidePanel.classList.remove('open');
+        overlay.classList.remove('active');
+    }
+
+    hamburgerBtn.addEventListener('click', openPanel);
+    closeBtn.addEventListener('click', closePanel);
+    overlay.addEventListener('click', closePanel);
+
+    fechaInicio.addEventListener('change', function() {
+        fechaFin.min = fechaInicio.value;
+        if (fechaFin.value && fechaFin.value < fechaInicio.value) {
+            fechaFin.value = '';
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const afectaOperativa = document.getElementById('afecta_operativa').value;
+        const detalleAfectacion = document.getElementById('detalle_afectacion').value.trim();
+
+        if (fechaFin.value && fechaInicio.value && fechaFin.value < fechaInicio.value) {
+            alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
+            event.preventDefault();
+            fechaFin.focus();
+            return;
+        }
+
+        if (afectaOperativa === 'Si' && detalleAfectacion === '') {
+            alert('El campo "Detalle afectación" es obligatorio cuando la afectación operativa es "Sí".');
+            event.preventDefault();
+            document.getElementById('detalle_afectacion').focus();
+        }
+    });
+</script>
+
 </body>
 </html>
