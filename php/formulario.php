@@ -109,7 +109,7 @@
 
                     <div class="form-group">
                         <label for="duracion">Duración*</label>
-                        <input type="text" id="duracion" name="duracion" required>
+                        <input type="text" id="duracion" name="duracion" readonly placeholder="Se calcula automáticamente" required>
                     </div>
 
                     <div class="form-group">
