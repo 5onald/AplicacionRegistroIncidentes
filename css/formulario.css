@@ -1,210 +1,192 @@
 /* Se definen los estilos globales para el cuerpo de la página web */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #E9E9E9;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E9E9E9;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
 
-        /* Se configuran los estilos visuales para la cabecera superior */
-        header {
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            position: relative;
-            z-index: 100;
-        }
+/* Se configuran los estilos visuales para la cabecera superior */
+header {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 100;
+}
 
-        /* Se establece la animación y posición del panel lateral deslizante */
-        .side-panel {
-            position: fixed;
-            top: 0;
-            right: -280px;
-            width: 280px;
-            height: 100%;
-            background-color: #ffffff;
-            box-shadow: -4px 0px 15px rgba(0, 0, 0, 0.2);
-            transition: right 0.3s ease-in-out;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
+/* Se establece la animación y posición del panel lateral deslizante */
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -4px 0px 15px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
 
-        /* Se activa el despliegue visible del panel lateral */
-        .side-panel.open {
-            right: 0;
-        }
+.side-panel.open {
+    right: 0;
+}
 
-        /* Se alinean los elementos del botón de cierre del panel */
-        .panel-header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: flex-end;
-        }
+.panel-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
 
-        /* Se define el botón visual de cierre (X) */
-        .close-btn {
-            font-size: 24px;
-            cursor: pointer;
-            color: #333333;
-        }
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333333;
+}
 
-        /* Se organizan las opciones y contenedores de datos de usuario dentro del panel */
-        .panel-content {
-            padding: 0 20px;
-        }
+.panel-content {
+    padding: 0 20px;
+}
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 16px;
-            color: #333333;
-            font-weight: bold;
-        }
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+}
 
-        .logout-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #333333;
-            font-size: 15px;
-            padding: 10px 0;
-            transition: color 0.2s;
-        }
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #333333;
+    font-size: 15px;
+    padding: 10px 0;
+    transition: color 0.2s;
+}
 
-        .logout-link:hover {
-            color: #d9534f;
-        }
+.logout-link:hover {
+    color: #d9534f;
+}
 
-        /* Se configura el oscurecimiento del fondo al desplegar la barra lateral */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            z-index: 999;
-        }
+/* Se configura el oscurecimiento del fondo al desplegar la barra lateral */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 999;
+}
 
-        .overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
 
-        /* Se establece el contenedor general que envuelve el formulario */
-        .container {
-            max-width: 70rem;
-            background-color: #34495e;
-            padding: 30px;
-            border-radius: 10px;
-            margin: 2rem auto; 
-        }
+/* Se establece el contenedor general que envuelve el formulario */
+.container {
+    max-width: 70rem;
+    background-color: #34495e;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 2rem auto; 
+}
 
-        /* Se define la tipografía y alineación para los títulos principales */
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        /* Se configura la distribución flexible que divide el formulario y la mascota */
-        .main-layout {
-            display: flex;
-            gap: 30px;
-        }
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-        /* Se define el espacio flexible que ocupará la sección del formulario */
-        .form-section {
-            flex: 1; 
-        }
+.main-layout {
+    display: flex;
+    gap: 30px;
+}
 
-        /* Se configuran las dimensiones y alineación del contenedor de la mascota */
-        .mascot-section {
-            width: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 50px; 
-        }
+.form-section {
+    flex: 1; 
+}
 
-        /* Se asegura que la imagen de la mascota se adapte de forma responsiva */
-        .mascot-section img {
-            max-width: 100%;
-            height: auto;
-        }
+.mascot-section {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px; 
+}
 
-        /* Se establece una estructura de cuadrícula de dos columnas para los campos */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+.mascot-section img {
+    max-width: 100%;
+    height: auto;
+}
 
-        /* Se define el comportamiento de los grupos de campos individuales */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 
-        /* Se permite que ciertos campos ocupen el ancho completo de la cuadrícula */
-        .form-group.full-width {
-            grid-column: span 2;
-        }
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
 
-        /* Se configuran las etiquetas de los campos del formulario */
-        label {
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
+.form-group.full-width {
+    grid-column: span 2;
+}
 
-        /* Se unifican los estilos visuales para entradas de texto, selectores y áreas de texto */
-        input, select, textarea {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
+label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
 
-        /* Se limita el redimensionamiento vertical exclusivo para las áreas de texto */
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
+input, select, textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
 
-        /* Se organiza el contenedor de los botones de acción inferior */
-        .buttons-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            grid-column: span 2;
-        }
+textarea {
+    resize: vertical;
+    height: 100px;
+}
 
-        /* Se define el estilo visual para el botón de salida o cancelación */
-        .btn-salir {
-            background-color: #d9534f;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    grid-column: span 2;
+}
 
-        /* Se define el estilo visual para el botón de publicación o envío */
-        .btn-publicar {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.btn-salir {
+    background-color: #d9534f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-publicar {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
