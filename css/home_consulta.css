@@ -25,7 +25,6 @@ header img {
 /* Dashboard y acciones */
 .dashboard-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #e9ecef; 
     padding: 16px 24px;
@@ -36,6 +35,12 @@ header img {
     font-size: 1.25rem;
     font-weight: bold;
     color: #212529;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 12px;
+    margin-left: auto; 
 }
 
 .side-panel {
