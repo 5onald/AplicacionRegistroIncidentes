@@ -13,7 +13,7 @@
 <!-- Se establece la cabecera principal con el logotipo corporativo y el menú de navegación -->
 <header>
     <img src="../img/instacredit.png" alt="Logo instacredit" width="310" height="80">
-    <img src="img/Menu-Hamburguesa.png" alt="Menu" width="80" height="80" id="hamburger-btn" style="cursor: pointer;">
+    <img src="../img/Menu-Hamburguesa.png" alt="Menu" width="80" height="80" id="hamburger-btn" style="cursor: pointer;">
 </header>
 
 <!-- Panel lateral deslizante -->
@@ -24,14 +24,14 @@
     <div class="panel-content">
         <div class="user-info">
             <span class="user-icon">
-                <img src="img/Logo-Usuario.png" alt="Icono de usuario" width="40" height="40">
+                <img src="../img/Logo-Usuario.png" alt="Icono de usuario" width="40" height="40">
             </span>
             <span class="user-name">Usuario</span>
         </div>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
         <a href="#" class="logout-link">
             <span class="logout-icon">
-                <img src="img/Cerrar-Sesion.png" alt="Salir" width="20" height="20">
+                <img src="../img/Cerrar-Sesion.png" alt="Salir" width="20" height="20">
             </span> Cerrar sesión
         </a>
     </div>
@@ -47,7 +47,7 @@
     <div class="main-layout">
         <!-- Se define la sección del formulario de captura de datos -->
         <div class="form-section">
-            <form action="procesar.php" method="POST">
+            <form action="procesar_formulario.php" method="POST">
                 <div class="form-grid">
                     
                     <div class="form-group">
@@ -144,7 +144,7 @@
 
         <!-- Se define la sección visual para mostrar a Prestamito -->
         <div class="mascot-section">
-            <img src="Prestamito-Celular.png" alt="Prestamito">
+            <img src="../img/Prestamito-Celular.png" alt="Prestamito">
         </div>
     </div>
 </div>
