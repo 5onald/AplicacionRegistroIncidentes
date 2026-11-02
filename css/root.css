@@ -5,3 +5,13 @@
   --GrisOscuroPrincipal: #23282B;
   --GrisSecundario: #9B9B9B;
 }
+
+/* Para los títulos principales */
+h1, h2, h3 {
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Para el cuerpo de texto y párrafos */
+body, p {
+    font-family: 'Montserrat', sans-serif;
+}
