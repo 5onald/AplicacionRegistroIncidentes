@@ -13,9 +13,29 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 5px 20px; 
     position: relative;
     z-index: 100;
+}
+
+header img {
+    max-height: 50px; 
+    width: auto;
+}
+
+/* Se cambian los bordes de los campos de texto y selectores a color verde */
+input, select, textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #28a745; 
+    font-size: 14px;
+}
+
+/* Opcional: Para que al hacer clic (focus) el borde se mantenga o resalte en verde brillante */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #218838;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.4);
 }
 
 /* Se establece la animación y posición del panel lateral deslizante */
