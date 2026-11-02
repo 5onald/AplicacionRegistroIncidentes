@@ -27,15 +27,16 @@ header img {
 input, select, textarea {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #28a745; 
+    border: 1px solid var(--VerdePrincipal); /* Utiliza el verde corporativo exacto */
     font-size: 14px;
+    color: var(--GrisOscuroPrincipal);
 }
 
-/* Opcional: Para que al hacer clic (focus) el borde se mantenga o resalte en verde brillante */
+/* Efecto al hacer clic o enfocar el campo */
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #218838;
-    box-shadow: 0 0 5px rgba(40, 167, 69, 0.4);
+    border-color: var(--VerdePrincipal);
+    box-shadow: 0 0 5px rgba(57, 181, 74, 0.4); /* Resplandor basado en el verde principal */
 }
 
 /* Se establece la animación y posición del panel lateral deslizante */
@@ -202,11 +203,20 @@ textarea {
     cursor: pointer;
 }
 
+.btn-salir:hover {
+    background-color: #c9302c;
+}
+
 .btn-publicar {
-    background-color: #28a745;
+    background-color: #74c286;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-publicar:hover {
+    background-color: var(--VerdePrincipal);
 }
