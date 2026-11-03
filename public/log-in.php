@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>instacredit | Log in</title>
     <link rel="icon" href="https://play-lh.googleusercontent.com/VoUV6OswKY1SFVqADHaAOcOCiCfHnK0GIecm7QglCwpDV4GzAGLahgM8T7vQeAgAqsqEajme77gxrpfGB4IMYA" type="image/x-icon">
-    <link rel="stylesheet" href="../css/log-in.css">
-    <link rel="stylesheet" href="../css/root.css">
+    <link rel="stylesheet" href="assets/css/pages/log-in.css">
+    <link rel="stylesheet" href="assets/css/root.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     <main>
         <section class="white-section">
             <div>
-                <img src="../img/instacredit1.png" alt="Instacredit-logo">
+                <img src="img/instacredit.png" alt="Instacredit-logo">
             </div>
             <div>
                 <h1>¡Bienvenido a Registro de Incidentes Instacredit!</h1>
@@ -25,7 +25,7 @@
                     <label for="password">Contraseña</label>
                     <input id="password" type="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
                     <label for="recordar"><input type="checkbox" id="recordar" name="recordar">Recordarme</label>
-                    <button type="submit">Iniciar sesión</button>
+                    <button id="button-login-section" type="submit">Iniciar sesión</button>
                 </form>
             </div>
             <div>
