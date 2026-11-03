@@ -78,9 +78,10 @@
                         </select>
                     </div>
 
+                    <!-- Hora de inicio con formato 24h con segundos -->
                     <div class="form-group">
                         <label for="hora_inicio">Hora de inicio*</label>
-                        <input type="time" id="hora_inicio" name="hora_inicio" required>
+                        <input type="time" id="hora_inicio" name="hora_inicio" step="1" required style="appearance: auto;">
                     </div>
 
                     <div class="form-group">
@@ -94,9 +95,10 @@
                         </select>
                     </div>
 
+                    <!-- Hora de finalización con formato 24h con segundos -->
                     <div class="form-group">
                         <label for="hora_fin">Hora de finalización*</label>
-                        <input type="time" id="hora_fin" name="hora_fin" required>
+                        <input type="time" id="hora_fin" name="hora_fin" step="1" required style="appearance: auto;">
                     </div>
 
                     <div class="form-group">
@@ -159,12 +161,11 @@
     const horaInicio = document.getElementById('hora_inicio');
     const horaFin = document.getElementById('hora_fin');
 
-    // Se controla el despliegue y cierre del panel lateral deslizante
     function openPanel() {
         sidePanel.classList.add('open');
         overlay.classList.add('active');
     }
-
+    
     function closePanel() {
         sidePanel.classList.remove('open');
         overlay.classList.remove('active');
@@ -180,23 +181,25 @@
         const horaFinVal = horaFin.value;
         const inputDuracion = document.getElementById('duracion');
 
-        // Se verifica que se haya seleccionado la fecha y ambas horas
+        // Se verifica la selección de la fecha y ambas horas
         if (fechaVal && horaInicioVal && horaFinVal) {
-            // Se combina la fecha con las horas 
-            const inicio = new Date(`${fechaVal}T${horaInicioVal}`);
-            let fin = new Date(`${fechaVal}T${horaFinVal}`);
+            const inicioStr = horaInicioVal.length === 5 ? `${horaInicioVal}:00` : horaInicioVal;
+            const finStr = horaFinVal.length === 5 ? `${horaFinVal}:00` : horaFinVal;
 
-            // Si la hora de fin es menor que la de inicio, se asume que es el día siguiente
+            const inicio = new Date(`${fechaVal}T${inicioStr}`);
+            let fin = new Date(`${fechaVal}T${finStr}`);
+
             if (fin < inicio) {
                 fin.setDate(fin.getDate() + 1);
             }
 
-            const diferenciaMs = fin - inicio; // Diferencia en milisegundos
-            const minutosTotales = Math.floor(diferenciaMs / (1000 * 60));
+            const diferenciaMs = fin - inicio;
+            const segundosTotales = Math.floor(diferenciaMs / 1000);
             
-            const dias = Math.floor(minutosTotales / 1440); // 1440 min en un día
-            const horasRestantes = Math.floor((minutosTotales % 1440) / 60);
-            const minutosRestantes = minutosTotales % 60;
+            const dias = Math.floor(segundosTotales / 86400);
+            const horasRestantes = Math.floor((segundosTotales % 86400) / 3600);
+            const minutosRestantes = Math.floor((segundosTotales % 3600) / 60);
+            const segundosRestantes = segundosTotales % 60;
 
             let partes = [];
 
@@ -206,8 +209,11 @@
             if (horasRestantes > 0) {
                 partes.push(horasRestantes + (horasRestantes === 1 ? " hora" : " horas"));
             }
-            if (minutosRestantes > 0 || partes.length === 0) {
+            if (minutosRestantes > 0) {
                 partes.push(minutosRestantes + (minutosRestantes === 1 ? " minuto" : " minutos"));
+            }
+            if (segundosRestantes > 0 || partes.length === 0) {
+                partes.push(segundosRestantes + (segundosRestantes === 1 ? " segundo" : " segundos"));
             }
 
             inputDuracion.value = partes.join(' y ');
@@ -216,7 +222,6 @@
         }
     }
 
-    // Se ejecuta el cálculo en tiempo real cada vez que cambie la fecha o alguna de las horas
     inputFecha.addEventListener('change', calcularDuracion);
     horaInicio.addEventListener('change', calcularDuracion);
     horaFin.addEventListener('change', calcularDuracion);
@@ -225,7 +230,6 @@
         const afectaOperativa = document.getElementById('afecta_operativa').value;
         const detalleAfectacion = document.getElementById('detalle_afectacion').value.trim();
 
-        // Se valida el detalle de afectación condicional
         if (afectaOperativa === 'Si' && detalleAfectacion === '') {
             alert('El campo "Detalle afectación" es obligatorio cuando la afectación operativa es "Sí".');
             event.preventDefault();
