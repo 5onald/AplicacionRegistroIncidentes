@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<!-- Capa oscura de fondo (overlay) cuando el panel está abierto -->
+<!-- Se muestra una capa oscura de fondo cuando el panel está abierto -->
 <div class="overlay" id="overlay"></div>
 
 <!-- Se inicia el contenedor principal que aloja el título y la estructura del formulario -->
@@ -79,8 +79,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="fecha_inicio">Fecha de inicio*</label>
-                        <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" required>
+                        <label for="hora_inicio">Hora de inicio*</label>
+                        <input type="time" id="hora_inicio" name="hora_inicio" required>
                     </div>
 
                     <div class="form-group">
@@ -95,8 +95,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="fecha_fin">Fecha de finalización*</label>
-                        <input type="datetime-local" id="fecha_fin" name="fecha_fin" required>
+                        <label for="hora_fin">Hora de finalización*</label>
+                        <input type="time" id="hora_fin" name="hora_fin" required>
                     </div>
 
                     <div class="form-group">
@@ -149,14 +149,15 @@
     </div>
 </div>
 
-<!-- Script para validar campos, fechas y controlar el panel lateral -->
+<!-- Script para validar campos, horas y controlar el panel lateral -->
 <script>
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const sidePanel = document.getElementById('sidePanel');
     const closeBtn = document.getElementById('closeBtn');
     const overlay = document.getElementById('overlay');
-    const fechaInicio = document.getElementById('fecha_inicio');
-    const fechaFin = document.getElementById('fecha_fin');
+    const inputFecha = document.getElementById('fecha');
+    const horaInicio = document.getElementById('hora_inicio');
+    const horaFin = document.getElementById('hora_fin');
 
     // Se controla el despliegue y cierre del panel lateral deslizante
     function openPanel() {
@@ -173,53 +174,58 @@
     closeBtn.addEventListener('click', closePanel);
     overlay.addEventListener('click', closePanel);
 
-    // Se actualiza el atributo 'min' de la fecha de fin basándose en la fecha de inicio
-    fechaInicio.addEventListener('change', function() {
-        fechaFin.min = fechaInicio.value;
-        if (fechaFin.value && fechaFin.value < fechaInicio.value) {
-            fechaFin.value = '';
-        }
-    });
-
     function calcularDuracion() {
-        const inicio = new Date(fechaInicio.value);
-        const fin = new Date(fechaFin.value);
+        const fechaVal = inputFecha.value;
+        const horaInicioVal = horaInicio.value;
+        const horaFinVal = horaFin.value;
         const inputDuracion = document.getElementById('duracion');
 
-        // Verificamos que ambas fechas sean válidas y que la fecha fin sea mayor
-        if (fechaInicio.value && fechaFin.value && fin >= inicio) {
-            const diferenciaMs = fin - inicio; // Diferencia en milisegundos
-            const horasTotales = Math.floor(diferenciaMs / (1000 * 60 * 60)); // Convertimos a horas
+        // Se verifica que se haya seleccionado la fecha y ambas horas
+        if (fechaVal && horaInicioVal && horaFinVal) {
+            // Se combina la fecha con las horas 
+            const inicio = new Date(`${fechaVal}T${horaInicioVal}`);
+            let fin = new Date(`${fechaVal}T${horaFinVal}`);
 
-            if (horasTotales < 24) {
-                inputDuracion.value = horasTotales + (horasTotales === 1 ? " hora" : " horas");
-            } else {
-                const dias = Math.floor(horasTotales / 24);
-                const horasRestantes = horasTotales % 24;
-                inputDuracion.value = dias + (dias === 1 ? " día" : " días") + (horasRestantes > 0 ? " y " + horasRestantes + " horas" : "");
+            // Si la hora de fin es menor que la de inicio, se asume que es el día siguiente
+            if (fin < inicio) {
+                fin.setDate(fin.getDate() + 1);
             }
+
+            const diferenciaMs = fin - inicio; // Diferencia en milisegundos
+            const minutosTotales = Math.floor(diferenciaMs / (1000 * 60));
+            
+            const dias = Math.floor(minutosTotales / 1440); // 1440 min en un día
+            const horasRestantes = Math.floor((minutosTotales % 1440) / 60);
+            const minutosRestantes = minutosTotales % 60;
+
+            let partes = [];
+
+            if (dias > 0) {
+                partes.push(dias + (dias === 1 ? " día" : " días"));
+            }
+            if (horasRestantes > 0) {
+                partes.push(horasRestantes + (horasRestantes === 1 ? " hora" : " horas"));
+            }
+            if (minutosRestantes > 0 || partes.length === 0) {
+                partes.push(minutosRestantes + (minutosRestantes === 1 ? " minuto" : " minutos"));
+            }
+
+            inputDuracion.value = partes.join(' y ');
         } else {
             inputDuracion.value = '';
         }
     }
 
-    // Ejecutar el cálculo en tiempo real cada vez que cambie la fecha de inicio o de fin
-    fechaInicio.addEventListener('change', calcularDuracion);
-    fechaFin.addEventListener('change', calcularDuracion);
+    // Se ejecuta el cálculo en tiempo real cada vez que cambie la fecha o alguna de las horas
+    inputFecha.addEventListener('change', calcularDuracion);
+    horaInicio.addEventListener('change', calcularDuracion);
+    horaFin.addEventListener('change', calcularDuracion);
 
     document.querySelector('form').addEventListener('submit', function(event) {
         const afectaOperativa = document.getElementById('afecta_operativa').value;
         const detalleAfectacion = document.getElementById('detalle_afectacion').value.trim();
 
-        // Validar congruencia de fechas
-        if (fechaFin.value && fechaInicio.value && fechaFin.value < fechaInicio.value) {
-            alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
-            event.preventDefault();
-            fechaFin.focus();
-            return;
-        }
-
-        // Validar el detalle de afectación condicional
+        // Se valida el detalle de afectación condicional
         if (afectaOperativa === 'Si' && detalleAfectacion === '') {
             alert('El campo "Detalle afectación" es obligatorio cuando la afectación operativa es "Sí".');
             event.preventDefault();
