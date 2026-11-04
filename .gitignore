@@ -1,0 +1,23 @@
+# Environment variables
+.env
+.env.*
+
+
+# Allow example configuration
+!.env.example
+
+
+# Dependencies
+/vendor/
+
+
+# Logs
+/storage/logs/
+
+
+# Temporary files
+*.log
+
+
+# IDE
+.vscode/
