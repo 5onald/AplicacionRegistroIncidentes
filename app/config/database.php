@@ -11,7 +11,7 @@ function getDatabaseConnection(): PDO
         return $conexion;
     }
 
-    // Cambiar estos valores según tu instancia y base de datos.
+    // Cambiar estos valores según instancia y base de datos.
     $servidor = 'CRI-D2825\SQLEXPRESS';
     $baseDatos = 'RegistroIncidentes';
 

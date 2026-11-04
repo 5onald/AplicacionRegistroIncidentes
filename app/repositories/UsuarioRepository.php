@@ -41,7 +41,7 @@ class UsuarioRepository
         $consulta = $this->conexion->prepare($sql);
 
         $consulta->execute([
-            'cuentaAD' => $cuentaAD
+            'CuentaAD' => $CuentaAD
         ]);
 
         $resultados = $consulta->fetchAll();
@@ -70,7 +70,7 @@ class UsuarioRepository
 
         return [
             'id' => (int) $primerResultado['IdUsuario'],
-            'cuentaAD' => $primerResultado['CuentaAD'],
+            'CuentaAD' => $primerResultado['CuentaAD'],
             'nombre' => $primerResultado['NombreMostrar'],
             'correo' => $primerResultado['Correo'],
             'activo' => (bool) $primerResultado['Activo'],
