@@ -1,39 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instacredit | Log in</title>
-    <link rel="icon" href="https://play-lh.googleusercontent.com/VoUV6OswKY1SFVqADHaAOcOCiCfHnK0GIecm7QglCwpDV4GzAGLahgM8T7vQeAgAqsqEajme77gxrpfGB4IMYA" type="image/x-icon">
-    <link rel="stylesheet" href="assets/css/pages/log-in.css">
-    <link rel="stylesheet" href="assets/css/base/root.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-</head>
-<body>
-    <main>
-        <section class="white-section">
-            <div>
-                <img src="assets/img/instacredit.png" alt="Instacredit-logo">
-            </div>
-            <div>
-                <h1>¡Bienvenido al Registro de Incidentes de Instacredit!</h1>
-                <form id="login-form">
-                    <button id="button-login-section" type="submit">Ingresar</button>
-                </form>
-            </div>
-            <div>
-                <p>Al presionar “Ingresar” estás de acuerdo con los</p>
-                <p><a href="https://www.instacredit.com/terminos_condiciones/">Términos de servicio</a> | <a href="https://www.instacredit.com/politicas_privacidad/">Políticas de privacidad</a></p>
-            </div>
-        </section>
+<?php
 
-        <section class="blue-section">
-            <div>
-                <img src="https://www.instacredit.com/wp-content/uploads/2024/06/Prestamito-Condiciones@2x.webp" alt="Prestamito-pulga-hacia-arriba">
-            </div>
-        </section>
-    </main>
-</body>
-</html>
+declare(strict_types=1);
+
+session_start();
+
+require_once __DIR__ . '/../app/controllers/AuthController.php';
+
+// Comprobar si se recibió un formulario.
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $accion = $_POST['action'] ?? '';
+
+    // Validar la acción solicitada.
+    if ($accion !== 'login') {
+        http_response_code(400);
+        exit('Solicitud no válida.');
+    }
+
+    // Validar el token CSRF.
+    $token = $_POST['csrf_token'] ?? '';
+
+    if (
+        !isset($_SESSION['csrf_token']) ||
+        !is_string($token) ||
+        !hash_equals($_SESSION['csrf_token'], $token)
+    ) {
+        $_SESSION['error'] = 'La solicitud no es válida. Inténtalo nuevamente.';
+
+        header('Location: index.php');
+        exit;
+    }
+
+    // Procesar el inicio de sesión.
+    $authController = new AuthController();
+    $authController->login();
+
+    exit;
+}
+
+// Si ya inició sesión, dirigirlo al sistema.
+if (isset($_SESSION['usuario'])) {
+    header('Location: catalogo.php');
+    exit;
+}
+
+// Generar un token para el formulario.
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Mostrar la vista del login.
+require_once __DIR__ . '/../app/views/auth/login.php';
