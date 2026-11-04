@@ -45,7 +45,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 2.2rem;
-    padding: 10vh 20%;
+    padding: 18vh 20%;
     background-color: var(--BlancoBase);
 }
 
@@ -68,7 +68,7 @@ main {
 }
 
 #login-section h1, .white-section h1 {
-    margin: 0 0 3.2rem;
+    margin: 0 0 4.4rem;
     text-align: center;
     font-size: 1.2rem; 
     line-height: 1.4;
@@ -114,7 +114,7 @@ main {
 
 #login-form button {
     display: block;
-    width: 62%;
+    width: 56%;
     min-height: 2.2rem;
     margin: 0 auto;
     border: 0;
