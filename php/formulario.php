@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar incidente al registro</title>
-    <!-- Se vincula la hoja de estilos externa -->
     <link rel="stylesheet" href="../css/formulario.css">
     <link rel="stylesheet" href="../css/root.css">
 </head>
@@ -78,10 +77,10 @@
                         </select>
                     </div>
 
-                    <!-- Hora de inicio con formato 24h con segundos -->
+                    <!-- Hora de inicio en formato 24h (sin segundos) -->
                     <div class="form-group">
                         <label for="hora_inicio">Hora de inicio*</label>
-                        <input type="time" id="hora_inicio" name="hora_inicio" step="1" required style="appearance: auto;">
+                        <input type="time" id="hora_inicio" name="hora_inicio" required style="appearance: auto;">
                     </div>
 
                     <div class="form-group">
@@ -95,10 +94,10 @@
                         </select>
                     </div>
 
-                    <!-- Hora de finalización con formato 24h con segundos -->
+                    <!-- Hora de finalización en formato 24h (sin segundos) -->
                     <div class="form-group">
                         <label for="hora_fin">Hora de finalización*</label>
-                        <input type="time" id="hora_fin" name="hora_fin" step="1" required style="appearance: auto;">
+                        <input type="time" id="hora_fin" name="hora_fin" required style="appearance: auto;">
                     </div>
 
                     <div class="form-group">
@@ -151,7 +150,7 @@
     </div>
 </div>
 
-<!-- Script para validar campos, horas y controlar el panel lateral -->
+<!-- Script -->
 <script>
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const sidePanel = document.getElementById('sidePanel');
@@ -183,11 +182,8 @@
 
         // Se verifica la selección de la fecha y ambas horas
         if (fechaVal && horaInicioVal && horaFinVal) {
-            const inicioStr = horaInicioVal.length === 5 ? `${horaInicioVal}:00` : horaInicioVal;
-            const finStr = horaFinVal.length === 5 ? `${horaFinVal}:00` : horaFinVal;
-
-            const inicio = new Date(`${fechaVal}T${inicioStr}`);
-            let fin = new Date(`${fechaVal}T${finStr}`);
+            const inicio = new Date(`${fechaVal}T${horaInicioVal}:00`);
+            let fin = new Date(`${fechaVal}T${horaFinVal}:00`);
 
             if (fin < inicio) {
                 fin.setDate(fin.getDate() + 1);
@@ -199,24 +195,12 @@
             const dias = Math.floor(segundosTotales / 86400);
             const horasRestantes = Math.floor((segundosTotales % 86400) / 3600);
             const minutosRestantes = Math.floor((segundosTotales % 3600) / 60);
-            const segundosRestantes = segundosTotales % 60;
-
-            let partes = [];
-
-            if (dias > 0) {
-                partes.push(dias + (dias === 1 ? " día" : " días"));
-            }
-            if (horasRestantes > 0) {
-                partes.push(horasRestantes + (horasRestantes === 1 ? " hora" : " horas"));
-            }
-            if (minutosRestantes > 0) {
-                partes.push(minutosRestantes + (minutosRestantes === 1 ? " minuto" : " minutos"));
-            }
-            if (segundosRestantes > 0 || partes.length === 0) {
-                partes.push(segundosRestantes + (segundosRestantes === 1 ? " segundo" : " segundos"));
-            }
-
-            inputDuracion.value = partes.join(' y ');
+            
+            const horasTotales = (dias * 24) + horasRestantes;
+            const horasPad = String(horasTotales).padStart(2, '0');
+            const minutosPad = String(minutosRestantes).padStart(2, '0');
+            
+            inputDuracion.value = `${horasPad}:${minutosPad}`;
         } else {
             inputDuracion.value = '';
         }
