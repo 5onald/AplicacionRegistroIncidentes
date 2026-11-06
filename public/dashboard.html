@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instacredit | Catálogo</title>
+    <link rel="icon" href="https://play-lh.googleusercontent.com/VoUV6OswKY1SFVqADHaAOcOCiCfHnK0GIecm7QglCwpDV4GzAGLahgM8T7vQeAgAqsqEajme77gxrpfGB4IMYA" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/css/base/root.css">
+    <link rel="stylesheet" href="assets/css/components/header.css">
+    <link rel="stylesheet" href="assets/css/components/footer.css">
+    <link rel="stylesheet" href="assets/css/pages/dashboard.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="header-logo">
+                <img src="assets/img/instacredit.png" alt="Instacredit">
+            </div>
+            <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-dropdown">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="menu-dropdown" id="menu-dropdown" hidden>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <span>Usuario123</span>
+                </div>
+                <div class="menu-divider"></div>
+                <a href="#" class="logout"><i class="bi bi-box-arrow-right"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Este aside tiene como función en filtrar los incidentes -->
+         <aside class="sidebar" aria-label="Filtrar los incidentes">
+            <h2 class="sidebar-title">FILTRAR DATOS</h2>
+
+            <!-- CAMPO PARA FILTRAR SI EL INCIDENTE ESTÁ HABILITIDADO O DESHABILITADO -->
+            <div class="campo-filtro">
+                <label for="filtrarEstado">Estado</label>
+                <select id="filtrarEstado">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+            </div>
+            
+            <!-- CAMPO PARA FILTRAR DE UNA FECHA A OTRA FECHA -->
+            <div class="campo-filtro">
+                <label for="fecha-desde">Desde:</label>
+                <input type="date" id="fecha-desde" name="fecha-desde">
+                <label for="fecha-hasta">Hasta:</label>
+                <input type="date" id="fecha-hasta" name="fecha-hasta">
+                <button type="button" id="button-filtrar-fechas">Filtrar</button>
+            </div>
+
+            <!-- CAMPO PARA FILTRAR EL TIPO DE INCIDENTE -->
+            <div class="campo-filtro">
+                <label for="filtrarTipoIncidente">Tipo de incidente</label>
+                <select id="filtrarTipoIncidente">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+            </div>
+
+            <!-- CAMPO PARA FILTRAR UNO O MÁS PAÍSES -->
+            <div class="campo-filtro">
+                <label for="filtrarPais">País</label>
+                <select id="filtrarPais">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+            </div>
+
+            <!-- CAMPO PARA FILTRAR UNO O MÁS SERVIDORES -->
+            <div class="campo-filtro">
+                <label for="filtrarServidor">Servidor</label>
+                <select id="filtrarServidor">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+            </div>
+
+            <!-- CAMPO PARA FILTRAR UNO O MÁS SISTEMAS -->
+            <div class="campo-filtro">
+                <label for="filtrarSistema">Sistema</label>
+                <select id="filtrarSistema">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+            </div>
+        </aside>
+    </main>
+
+    <footer></footer>
+
+    <script src="assets/js/components/header.js"></script>
+</body>
+</html>
